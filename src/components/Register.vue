@@ -15,13 +15,16 @@
               <v-text-field
                   ref="name"
                   v-model="name"
-                  :rules="[() => !!name || 'This field is required']"
+                  :rules="[() => name>0 || 'This field is required']"
                   :error-messages="errorMessages"
                   label="Full Name"
                   placeholder="Enter name"
                   required
               ></v-text-field>
               <v-text-field
+                  id="email"
+                  type="email"
+                  name="email"
                   ref="Email"
                   v-model="email"
                   :rules="[
@@ -73,9 +76,11 @@
                 </v-tooltip>
               </v-slide-x-reverse-transition>
               <v-btn
+                  :disabled="!formIsValid"
                   color="primary"
                   text
-                  v-on:click="registerNewUser()">
+                  v-on:click="registerNewUser()"
+              >
 
                 Submit
               </v-btn>
@@ -128,6 +133,9 @@ export default {
   },
 
   methods: {
+    formIsValid() {
+
+    },
     addressCheck() {
       this.errorMessages = this.email && !this.name
           ? `I'm required`
@@ -145,12 +153,24 @@ export default {
       console.log(this.name);
       console.log(this.email);
       console.log(this.password);
-      registerUser(this.name, this.email, this.password)
+      registerUser(this.name, this.email, this.password).then(() => {
+        alert("Konto załozone poprawnie")
+        this.$router.push('/').catch(() => {
+        });
+      }).catch(() => {
+        alert("Istnieje juz konto z takim emailem")
+        this.name=""
+        this.email=""
+        this.password=""
+      })
 
     }
-
-
   },
+  isEmailValid: function () {
+    return (this.email == "") ? "" : (this.reg.test(this.email)) ? 'has-success' : 'has-error';
+  }
+
+
 }
 </script>
 
