@@ -15,8 +15,8 @@ function sendRequest(address, endpoint, method, body, headers) {
 export function getUsers() {
     return sendRequest(
         backendAddress,
-        "users",
-        "get",
+        'users',
+        'get',
         {},
         {}
     );
@@ -30,5 +30,19 @@ export function registerUser(name, email, password) {
         {name, email, password},
         {}
     )
+}
+
+export function loginUser(name, email, password) {
+    return sendRequest(backendAddress,
+        'login',
+        'post',
+        {name, email, password},
+        {})
+}
+
+export function getAllLectures() {
+    return sendRequest(backendAddress,
+        'lectures', 'get'
+        , {}, {})
 }
 
