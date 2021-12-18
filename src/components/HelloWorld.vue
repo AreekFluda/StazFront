@@ -34,13 +34,12 @@
                 required
             ></v-text-field>
             <v-text-field
+                v-model="password"
                 type="password"
                 name="input-10-2"
                 placeholder="Enter password"
                 value=""
                 class="input-group--focused"
-
-
             ></v-text-field>
           </v-card-text>
           <v-divider class="mt-12"></v-divider>
@@ -60,16 +59,13 @@
             </v-slide-x-reverse-transition>
             <v-btn
                 color="primary"
-                v-on:click="signIn"
-
-            >
+                v-on:click="register">
               Sign In
             </v-btn>
             <v-btn
                 color="primary"
                 text
-
-            >
+                v-on:click="logIn">
               Submit
             </v-btn>
           </v-card-actions>
@@ -80,6 +76,8 @@
 </template>
 
 <script>
+import {loginUser} from "@/api/api";
+
 export default {
   data: () => ({
     errorMessages: '',
@@ -119,9 +117,20 @@ export default {
       return this.$router.push('/schedule').catch(() => {
       });
     },
-    register(){
+    register() {
       return this.$router.push('/register').catch(() => {
       });
+    },
+    logIn() {
+      console.log(this.name);
+      console.log(this.email);
+      console.log(this.password);
+      loginUser(this.name, this.email, this.password).then(() => {
+        alert("Zalogowano poprawnie")
+        this.$router.push('/schedule').catch(() => {
+        });
+      })
+
     }
   },
 }
