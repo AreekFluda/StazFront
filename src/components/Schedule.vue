@@ -1,13 +1,13 @@
 <template>
   <v-app>
-      <v-row>
-        <v-col class="text-left">
-          <v-btn class="link" id="backBtn" color="primary" v-on:click="goMeals">Wyloguj</v-btn>
-        </v-col>
-        <v-col class="text-right">
-          <v-btn class="text-right" id="signInBtn" color="primary" v-on:click="goMeals">Zapisz się</v-btn>
-        </v-col>
-      </v-row>
+    <v-row>
+      <v-col class="text-left">
+        <v-btn class="link" id="backBtn" color="primary">Wyloguj</v-btn>
+      </v-col>
+      <v-col class="text-right">
+        <v-btn class="text-right" id="signInBtn" color="primary" v-on:click="goSignUpPage()">Zapisz się</v-btn>
+      </v-col>
+    </v-row>
 
 
     <v-container>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: "Schedule",
   data() {
@@ -83,9 +85,16 @@ export default {
           calories: "Zakonczenie konferencji",
 
         }
-      ]
-
+      ],
     }
+
+
+  }, methods: {
+    goSignUpPage() {
+      return this.$router.push('/signUp').catch(() => {
+      });
+    },
+
   }
 }
 
