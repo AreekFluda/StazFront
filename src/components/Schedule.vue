@@ -2,10 +2,10 @@
   <v-app>
     <v-row>
       <v-col class="text-left">
-        <v-btn class="link" id="backBtn" color="primary">Wyloguj</v-btn>
+        <v-btn class="link" id="backBtn" color="primary" v-on:click="logOut">Wyloguj</v-btn>
       </v-col>
       <v-col class="text-right">
-        <v-btn class="text-right" id="signInBtn" color="primary" v-on:click="goSignUpPage()">Zapisz się</v-btn>
+        <v-btn id="signInBtn" color="primary" v-on:click="goSignUpPage()">Zapisz się</v-btn>
       </v-col>
     </v-row>
 
@@ -91,9 +91,13 @@ export default {
 
   }, methods: {
     goSignUpPage() {
-      return this.$router.push('/signUp').catch(() => {
+      return this.$router.push('/lectures').catch(() => {
       });
     },
+    logOut() {
+      return this.$router.push('/').catch(() => {
+      });
+    }
 
   }
 }
