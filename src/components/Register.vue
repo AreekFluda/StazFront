@@ -3,22 +3,19 @@
     <v-app>
       <span id="registerLabel">Register</span>
       <v-row justify="center">
-
         <v-col
             cols="12"
             sm="10"
             md="8"
-            lg="6"
-        >
+            lg="6"        >
           <v-card ref="form">
             <v-card-text>
               <v-text-field
                   ref="name"
-                  v-model="name"
-                  :rules="[() => name>0 || 'This field is required']"
-                  :error-messages="errorMessages"
-                  label="Full Name"
-                  placeholder="Enter name"
+                  v-model="login"
+                  :rules="[() => login>0 || 'To pole jest wymagane']"
+                  label="Login"
+                  placeholder="Login"
                   required
               ></v-text-field>
               <v-text-field
@@ -28,33 +25,32 @@
                   ref="Email"
                   v-model="email"
                   :rules="[
-              () => !!email || 'This field is required',
-              () => !!email && email.length <= 25 || 'Email must be less than 25 characters',
-              addressCheck
+              () => !!email || 'To pole jest wymagane',
             ]"
-                  label="Email Line"
-                  placeholder="Enter email"
+                  label="Wprowadz email"
+                  placeholder="Wprowadz email"
                   counter="25"
                   required
               ></v-text-field>
               <v-text-field
                   v-model="password"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required, rules.min]"
                   :type="show1 ? 'text' : 'password'"
                   name="input-10-1"
-                  label="Normal with hint text"
-                  hint="At least 8 characters"
+                  :rules="[
+              () => !!email || 'To pole jest wymagane',
+            ]"
+                  label="Hasło"
                   counter
-                  @click:append="show1 = !show1"
-              ></v-text-field>
+                  @click:append="show1 = !show1
+"              ></v-text-field>
             </v-card-text>
             <v-divider class="mt-12"></v-divider>
             <v-card-actions>
               <v-btn text
                      color="primary"
                      v-on:click="goBack()">
-                Cancel
+                Anuluj
               </v-btn>
               <v-spacer></v-spacer>
               <v-slide-x-reverse-transition>
@@ -76,13 +72,12 @@
                 </v-tooltip>
               </v-slide-x-reverse-transition>
               <v-btn
-                  :disabled="!formIsValid"
                   color="primary"
                   text
+                  :disabled="!email.length || !login.length || !password.length"
                   v-on:click="registerNewUser()"
               >
-
-                Submit
+                Zatwierdz
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -99,26 +94,21 @@ import {registerUser} from "@/api/api";
 
 export default {
   data: () => ({
-    errorMessages: '',
-    name: null,
-    email: null,
+    login: '',
+    email: '',
     formHasErrors: false,
     show1: false,
     show2: true,
     show3: false,
     show4: false,
-    password: 'Password',
-    rules: {
-      required: value => !!value || 'Required.',
-      min: v => v.length >= 8 || 'Min 8 characters',
-      emailMatch: () => (`The email and password you entered don't match`),
-    },
+    password: '',
+
   }),
 
   computed: {
     form() {
       return {
-        name: this.name,
+        login: this.login,
         address: this.email,
         password: this.password
 
@@ -126,42 +116,26 @@ export default {
     },
   },
 
-  watch: {
-    name() {
-      this.errorMessages = ''
-    },
-  },
 
   methods: {
-    formIsValid() {
-
-    },
-    addressCheck() {
-      this.errorMessages = this.email && !this.name
-          ? `I'm required`
-          : ''
-
-      return true
-    },
-
     goBack() {
       return this.$router.push('/').catch(() => {
       });
     },
 
     registerNewUser() {
-      console.log(this.name);
+      console.log(this.login);
       console.log(this.email);
       console.log(this.password);
-      registerUser(this.name, this.email, this.password).then(() => {
+      registerUser(this.login, this.email, this.password).then(() => {
         alert("Konto załozone poprawnie")
         this.$router.push('/').catch(() => {
         });
       }).catch(() => {
         alert("Istnieje juz konto z takim emailem")
-        this.name=""
-        this.email=""
-        this.password=""
+        this.login = ""
+        this.email = ""
+        this.password = ""
       })
 
     }
