@@ -10,12 +10,11 @@
 export default {
   name: 'App',
 
-  components: {
+  components: {},
 
-  },
-
-  data: () => ({
-    //
-  }),
+  data: () => ({}),
+  mounted() {
+    this.$store.dispatch("fetchLectures").catch((error) => alert(error.response.data))
+  }
 };
 </script>
