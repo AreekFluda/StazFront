@@ -32,6 +32,8 @@ export function registerUser(name, email, password) {
     )
 }
 
+
+
 export function loginUser(name, email, password) {
     return sendRequest(backendAddress,
         'login',
@@ -42,7 +44,11 @@ export function loginUser(name, email, password) {
 
 export function getAllLectures() {
     return sendRequest(backendAddress,
-        'lectures', 'get'
+        'lecture', 'get'
         , {}, {})
+}
+
+export function getAllParticipants() {
+    return sendRequest(backendAddress, 'participants', 'get', {}, {})
 }
 
